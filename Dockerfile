@@ -1,10 +1,9 @@
 # Base image
 FROM ubuntu:22.04
 
-# Tránh tương tác khi cài đặt
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Cài các gói cơ bản + Python3 + pip
+# Cài gói cơ bản + Python3 + pip + curl
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -24,5 +23,5 @@ WORKDIR /app
 COPY start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
-# Command mặc định khi chạy container
+# Command mặc định
 CMD ["/usr/local/bin/start.sh"]

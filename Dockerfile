@@ -3,7 +3,7 @@ FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Cài gói cơ bản + Python3 + pip + curl
+# Cài các gói cơ bản + Python3 + pip + curl
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -14,6 +14,9 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
+
+# Đặt mật khẩu root
+RUN echo "root:phat12345" | chpasswd
 
 # Chạy container với root
 USER root

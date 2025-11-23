@@ -1,30 +1,28 @@
-# Dùng Ubuntu mới nhất
+# Base image
 FROM ubuntu:22.04
 
 # Tránh tương tác khi cài đặt
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Cài các gói cơ bản
+# Cài các gói cơ bản + Python3 + pip
 RUN apt-get update && apt-get install -y \
-    sudo \
     git \
     curl \
     wget \
     vim \
+    sudo \
     python3 \
     python3-pip \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Thiết lập root
+# Chạy container với root
 USER root
-
-# Tạo thư mục chứa code
 WORKDIR /app
 
-# Copy script update repo vào container
+# Copy script start
 COPY start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
-# Command mặc định
+# Command mặc định khi chạy container
 CMD ["/usr/local/bin/start.sh"]

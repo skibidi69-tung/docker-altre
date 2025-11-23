@@ -1,6 +1,6 @@
 # Custom Dockerfile for Pterodactyl Java 21 with root privileges
 
-FROM ghcr.io/pterodactyl/yolks:java_21
+FROM ubuntu:22.04
 
 # Switch to root user
 USER root

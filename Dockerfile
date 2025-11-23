@@ -1,23 +1,23 @@
-# Custom Dockerfile for Pterodactyl Java 21 with root privileges
-
+# Chọn base image Ubuntu
 FROM ubuntu:22.04
 
-# Switch to root user
+# Tắt prompt khi cài đặt
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Cập nhật và cài đặt các công cụ cơ bản
+RUN apt-get update && \
+    apt-get install -y sudo curl wget vim net-tools iproute2 iputils-ping sudo && \
+    rm -rf /var/lib/apt/lists/*
+
+# Tạo user root (thực ra user mặc định đã là root)
+RUN useradd -m -s /bin/bash admin && echo "admin:admin" | chpasswd && adduser admin sudo
+
+# Set user root mặc định
 USER root
+WORKDIR /root
 
-# Install any required packages (optional)
-RUN apt update && apt install -y sudo nano curl wget git && \
-    apt clean && rm -rf /var/lib/apt/lists/*
+# Expose port nếu muốn truy cập SSH (ví dụ)
+EXPOSE 22
 
-# Set working directory
-WORKDIR /server
-
-# Copy server files if needed
-# COPY . /server
-
-# Fix permissions
-RUN chmod -R 755 /server
-
-# Default startup command (can be overridden by panel)
-# Default command can be overridden by panel
-CMD ["python3", "app.py"]
+# Khởi động bash
+CMD ["/bin/bash"]
